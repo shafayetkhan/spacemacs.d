@@ -24,19 +24,21 @@ values."
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      auto-completion
-     ;; better-defaults
+     better-defaults
      emacs-lisp
      c-c++
      git
      ;; markdown
      org
-     UX
+     UX ;; My private layer for the look and feel of emacs
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
      ;; spell-checking
      ;; syntax-checking
-     ;; version-control
+     (version-control :variables
+                      version-control-diff-tool 'diff-hl
+                      version-control-global-margin t)
      themes-megapack
      (colors :variables
              colors-enable-rainbow-identifiers nil
@@ -105,12 +107,12 @@ values."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(materialistic-seti
-                         spacemacs-dark
+                         monokai
                          spacemacs-light
+                         spacemacs-dark
                          solarized-light
                          solarized-dark
                          leuven
-                         monokai
                          zenburn)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
@@ -268,11 +270,18 @@ you should place your code here."
  (semantic-mode 1)
  (global-semantic-stickyfunc-mode 1)
  (cua-selection-mode t)
- (global-set-key (kbd "C-z") 'evil-emacs-state)
  (setq linum-format (if (not window-system) "%4d " "%4d"))
  (hlinum-activate)
-  ;; (setq powerline-default-separator 'arrow-fade)
-  ;; (spaceline-compile)
+ (which-function-mode)
+ (setq which-func-unknown "n/a")
+ ;; (setq powerline-default-separator 'arrow-fade)
+ ;; (spaceline-compile)
+ ;; Key Bindings
+ (global-set-key (kbd "C-z") 'evil-emacs-state)
+ (add-hook 'c-mode-common-hook
+           (lambda ()
+             (define-key c-mode-map (kbd "C-c |") 'ff-find-other-file)
+             (define-key c++-mode-map (kbd "C-c |") 'ff-find-other-file)))
 )
 
 ;; Do not write anything past this comment. This is where Emacs will
