@@ -23,9 +23,10 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     ;; auto-completion
+     auto-completion
      ;; better-defaults
      emacs-lisp
+     c-c++
      git
      ;; markdown
      org
@@ -265,6 +266,8 @@ you should place your code here."
  (add-hook 'prog-mode-hook #'linum-mode)
  (semantic-mode 1)
  (global-semantic-stickyfunc-mode 1)
+ (cua-selection-mode t)
+ (global-set-key (kbd "C-z") 'evil-emacs-state)
   ;; (setq powerline-default-separator 'arrow-fade)
   ;; (spaceline-compile)
 )
