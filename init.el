@@ -48,6 +48,7 @@ values."
    dotspacemacs-additional-packages '(helm-projectile
                                       helm-ag
                                       semantic
+                                      hlinum
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
@@ -268,6 +269,8 @@ you should place your code here."
  (global-semantic-stickyfunc-mode 1)
  (cua-selection-mode t)
  (global-set-key (kbd "C-z") 'evil-emacs-state)
+ (setq linum-format (if (not window-system) "%4d " "%4d"))
+ (hlinum-activate)
   ;; (setq powerline-default-separator 'arrow-fade)
   ;; (spaceline-compile)
 )
