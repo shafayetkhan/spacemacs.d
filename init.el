@@ -267,8 +267,6 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
  (add-hook 'prog-mode-hook #'linum-mode)
- (semantic-mode 1)
- (global-semantic-stickyfunc-mode 1)
  (cua-selection-mode t)
  (setq linum-format (if (not window-system) "%4d " "%4d"))
  (hlinum-activate)
@@ -278,8 +276,11 @@ you should place your code here."
  ;; (spaceline-compile)
  ;; Key Bindings
  (global-set-key (kbd "C-z") 'evil-emacs-state)
+ (global-set-key (kbd "C-c C-f") 'spacemacs/helm-find-files)
  (add-hook 'c-mode-common-hook
            (lambda ()
+             (semantic-mode 1)
+             (global-semantic-stickyfunc-mode 1)
              (define-key c-mode-map (kbd "C-c |") 'ff-find-other-file)
              (define-key c++-mode-map (kbd "C-c |") 'ff-find-other-file)))
 )
