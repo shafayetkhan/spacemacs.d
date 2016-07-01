@@ -257,7 +257,7 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
-  )
+  (setq-default git-magit-status-fullscreen t))
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
@@ -281,8 +281,10 @@ you should place your code here."
            (lambda ()
              (semantic-mode 1)
              (global-semantic-stickyfunc-mode 1)
-             (define-key c-mode-map (kbd "C-c |") 'ff-find-other-file)
-             (define-key c++-mode-map (kbd "C-c |") 'ff-find-other-file)))
+             (define-key c-mode-map (kbd "C-c h") 'ff-find-other-file)
+             (define-key c++-mode-map (kbd "C-c h") 'ff-find-other-file)))
+ ;; Git config
+ (setq magit-repository-directories '("~/code/"))
  ;; Better Defaults from Sanityinc (Steve Purcell)
  ;; When splitting window, show (other-buffer) in the new window
  (defun split-window-func-with-other-buffer (split-function)
