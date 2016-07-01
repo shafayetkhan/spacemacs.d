@@ -283,7 +283,50 @@ you should place your code here."
              (global-semantic-stickyfunc-mode 1)
              (define-key c-mode-map (kbd "C-c |") 'ff-find-other-file)
              (define-key c++-mode-map (kbd "C-c |") 'ff-find-other-file)))
-)
+ ;; Better Defaults from Sanityinc (Steve Purcell)
+ ;; When splitting window, show (other-buffer) in the new window
+ (defun split-window-func-with-other-buffer (split-function)
+   (lexical-let ((s-f split-function))
+     (lambda (&optional arg)
+       "Split this window and switch to the new window unless ARG is provided."
+       (interactive "P")
+       (funcall s-f)
+       (let ((target-window (next-window)))
+         (set-window-buffer target-window (other-buffer))
+         (unless arg
+           (select-window target-window))))))
+
+ (global-set-key "\C-x2" (split-window-func-with-other-buffer 'split-window-vertically))
+ (global-set-key "\C-x3" (split-window-func-with-other-buffer 'split-window-horizontally))
+
+ (defun sanityinc/toggle-delete-other-windows ()
+   "Delete other windows in frame if any, or restore previous window config."
+   (interactive)
+   (if (and winner-mode
+            (equal (selected-window) (next-window)))
+       (winner-undo)
+     (delete-other-windows)))
+
+ (global-set-key "\C-x1" 'sanityinc/toggle-delete-other-windows)
+
+ ;; Rearrange split windows
+ (defun split-window-horizontally-instead ()
+   (interactive)
+   (save-excursion
+     (delete-other-windows)
+     (funcall (split-window-func-with-other-buffer 'split-window-horizontally))))
+
+ (defun split-window-vertically-instead ()
+   (interactive)
+   (save-excursion
+     (delete-other-windows)
+     (funcall (split-window-func-with-other-buffer 'split-window-vertically))))
+
+ (global-set-key "\C-c|" 'split-window-horizontally-instead)
+ (global-set-key "\C-c_" 'split-window-vertically-instead)
+ ;; Set keybinding to dedicate current window
+ (global-set-key (kbd "C-c <down>") 'spacemacs/toggle-current-window-dedication)
+ )
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
