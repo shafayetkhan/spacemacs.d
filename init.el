@@ -260,7 +260,20 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
-  (setq-default git-magit-status-fullscreen t))
+  (setq-default git-magit-status-fullscreen t)
+  ;; Evil state cursor colors
+  ;; (defvar spacemacs-evil-cursor-colors '((normal . "DarkGoldenrod2")
+  ;;                                        (insert . "chartreuse3")
+  ;;                                        (emacs  . "red")
+  ;;                                        (evilified . "LightGoldenrod3")
+  ;;                                        (visual . "gray")
+  ;;                                        (motion . "plum3")
+  ;;                                        (lisp   . "HotPink1")
+  ;;                                        (iedit  . "firebrick1")
+  ;;                                        (iedit-insert  . "firebrick1"))
+  ;;   "Colors assigned to evil states.")
+  )
+
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
