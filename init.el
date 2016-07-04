@@ -26,7 +26,8 @@ values."
      auto-completion
      better-defaults
      emacs-lisp
-     c-c++
+     (c-c++ :variables c-c++-enable-clang-support t)
+     (syntax-checking :variables syntax-checking-enable-by-default nil)
      git
      ;; markdown
      org
@@ -281,10 +282,17 @@ you should place your code here."
  (global-set-key (kbd "C-c C-f") 'spacemacs/helm-find-files)
  (add-hook 'c-mode-common-hook
            (lambda ()
+             ;; Safe local variables
+             (put 'helm-make-build-dir 'safe-local-variable 'stringp)
+             ;;(setq compilation-scroll-output 'first-error)
+             (setq compilation-scroll-output t)
              (semantic-mode 1)
              (global-semantic-stickyfunc-mode 1)
              (define-key c-mode-map (kbd "C-c h") 'ff-find-other-file)
-             (define-key c++-mode-map (kbd "C-c h") 'ff-find-other-file)))
+             (define-key c++-mode-map (kbd "C-c h") 'ff-find-other-file)
+             (with-eval-after-load 'projectile
+               (push '("C" "h") projectile-other-file-alist)
+               (push '("cxx" "h") projectile-other-file-alist))))
  ;; Git config
  (setq magit-repository-directories '("~/code/"))
  ;; Better Defaults from Sanityinc (Steve Purcell)
