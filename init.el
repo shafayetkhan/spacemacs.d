@@ -26,12 +26,14 @@ values."
      auto-completion
      better-defaults
      emacs-lisp
-     ;;(c-c++ :variables c-c++-enable-clang-support t)
-     c-c++
+     (c-c++ :variables c-c++-enable-clang-support t)
+     ;;c-c++
      (syntax-checking :variables syntax-checking-enable-by-default nil)
      git
      ;; markdown
      org
+     gtags
+     cscope
      ;;UX ;; My private layer for the look and feel of emacs
      ;; (shell :variables
      ;;        shell-default-height 30
@@ -309,6 +311,7 @@ you should place your code here."
              (global-semantic-stickyfunc-mode 1)
              (define-key c-mode-map (kbd "C-c h") 'ff-find-other-file)
              (define-key c++-mode-map (kbd "C-c h") 'ff-find-other-file)
+             (define-key evil-normal-state-map (kbd "M-.") 'helm-gtags-dwim)
              (with-eval-after-load 'projectile
                (push '("C" "h") projectile-other-file-alist)
                (push '("cxx" "h") projectile-other-file-alist))))
