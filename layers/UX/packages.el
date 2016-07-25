@@ -31,10 +31,12 @@
 
 (defconst UX-packages
   '(
-    ;; Package recipe (How cool is this?!)
+    Package recipe (How cool is this?!)
     (materialistic-seti-theme :location (recipe
                                    :fetcher github
-                                   :repo "shafayetkhan/materialistic-seti")))
+                                   :repo "shafayetkhan/materialistic-seti"))
+    ;; (materialistic-seti-theme :location "~/code/emacs-configs/materialistic-seti")
+    )
   "The list of Lisp packages required by the UX layer.
 
 Each entry is either:

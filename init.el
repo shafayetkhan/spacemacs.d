@@ -26,12 +26,13 @@ values."
      auto-completion
      better-defaults
      emacs-lisp
-     (c-c++ :variables c-c++-enable-clang-support t)
+     ;;(c-c++ :variables c-c++-enable-clang-support t)
+     c-c++
      (syntax-checking :variables syntax-checking-enable-by-default nil)
      git
      ;; markdown
      org
-     UX ;; My private layer for the look and feel of emacs
+     ;;UX ;; My private layer for the look and feel of emacs
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
@@ -49,6 +50,7 @@ values."
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(helm-projectile
+                                      (materialistic-set-theme :location "~/code/emacs-configs/materialistic-seti")
                                       ibuffer-vc
                                       fullframe
                                       helm-ag
@@ -109,7 +111,7 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(materialistic-seti
+   dotspacemacs-themes '(;;materialistic-seti
                          monokai
                          spacemacs-light
                          spacemacs-dark
@@ -261,18 +263,19 @@ executes.
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
   (setq-default git-magit-status-fullscreen t)
-  ;; Evil state cursor colors
-  ;; (defvar spacemacs-evil-cursor-colors '((normal . "DarkGoldenrod2")
-  ;;                                        (insert . "chartreuse3")
-  ;;                                        (emacs  . "red")
-  ;;                                        (evilified . "LightGoldenrod3")
-  ;;                                        (visual . "gray")
-  ;;                                        (motion . "plum3")
-  ;;                                        (lisp   . "HotPink1")
-  ;;                                        (iedit  . "firebrick1")
-  ;;                                        (iedit-insert  . "firebrick1"))
-  ;;   "Colors assigned to evil states.")
-  )
+  ;; This should go in the config.el of the UX layer
+  (defvar spacemacs-evil-cursors '(("normal" "DarkGoldenrod2" box)
+                                   ("insert" "chartreuse3" (bar . 2))
+                                   ("emacs" "red" box)
+                                   ("hybrid" "chartreuse3" (bar . 2))
+                                   ("replace" "chocolate" (hbar . 2))
+                                   ("evilified" "LightGoldenrod3" box)
+                                   ("visual" "gray" (hbar . 2))
+                                   ("motion" "plum3" box)
+                                   ("lisp" "HotPink1" box)
+                                   ("iedit" "firebrick1" box)
+                                   ("iedit-insert" "firebrick1" (bar . 2)))
+    "Colors assigned to evil states with cursor definitions."))
 
 
 (defun dotspacemacs/user-config ()
@@ -282,7 +285,10 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+ ;; (add-to-list 'custom-theme-load-path "~/code/emacs-configs/materialistic-seti")
+ ;; (load-theme 'materialistic-seti)
  (add-hook 'prog-mode-hook #'linum-mode)
+ (require 'materialistic-seti-theme)
  (cua-selection-mode t)
  (setq linum-format (if (not window-system) "%4d " "%4d"))
  (hlinum-activate)
@@ -297,8 +303,8 @@ you should place your code here."
            (lambda ()
              ;; Safe local variables
              (put 'helm-make-build-dir 'safe-local-variable 'stringp)
-             ;;(setq compilation-scroll-output 'first-error)
-             (setq compilation-scroll-output t)
+             (setq compilation-scroll-output 'first-error)
+             ;;(setq compilation-scroll-output t)
              (semantic-mode 1)
              (global-semantic-stickyfunc-mode 1)
              (define-key c-mode-map (kbd "C-c h") 'ff-find-other-file)
@@ -447,8 +453,19 @@ Version 2015-10-14"
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("8baebc9660b01e1d71565869b492b3dc98299138e692aefe5427019a7c171f10" "ff349024280f2b64ebc0213f293261f48d03d1a1a335c43e86a11925765b01da" default)))
  '(evil-search-module (quote evil-search))
- '(exec-path-from-shell-arguments (quote ("-l"))))
+ '(exec-path-from-shell-arguments (quote ("-l")))
+ '(safe-local-variable-values (quote ((helm-make-build-dir . "./")))))
+;; (custom-set-faces
+;;  ;; custom-set-faces was added by Custom.
+;;  ;; If you edit it by hand, you could mess it up, so be careful.
+;;  ;; Your init file should contain only one such instance.
+;;  ;; If there is more than one, they won't work right.
+;;  '(spacemacs-emacs-face ((t (:background "Red" :foreground "#49483E" :box (:line-width 1 :color "#3E3D31" :style unspecified) :inherit (quote mode-line)))))
+;;  '(spacemacs-hybrid-face ((t (:background "chartreuse3" :foreground "#49483E" :box (:line-width 1 :color "#3E3D31" :style unspecified) :inherit (quote mode-line))))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
