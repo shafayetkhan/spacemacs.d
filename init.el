@@ -395,7 +395,51 @@ you should place your code here."
                filename-and-process)))
  (setq ibuffer-filter-group-name-face 'font-lock-doc-face)
  (global-set-key (kbd "C-x C-b") 'ibuffer)
- )
+ ;; Xah Lee Make Backup of Current File
+ (defun xah-make-backup ()
+   "Make a backup copy of current file or dired marked files.
+If in dired, backup current file or marked files.
+The backup file name is
+ ‹name›~‹timestamp›~
+example:
+ file.html~20150721T014457~
+in the same dir. If such a file already exist, it's overwritten.
+If the current buffer is not associated with a file, nothing's done.
+URL `http://ergoemacs.org/emacs/elisp_make-backup.html'
+Version 2015-10-14"
+   (interactive)
+   (let ((ξfname (buffer-file-name)))
+     (if ξfname
+         (let ((ξbackup-name
+                (concat ξfname "~" (format-time-string "%Y%m%dT%H%M%S") "~")))
+           (copy-file ξfname ξbackup-name t)
+           (message (concat "Backup saved at: " ξbackup-name)))
+       (if (string-equal major-mode "dired-mode")
+           (progn
+             (mapc (lambda (ξx)
+                     (let ((ξbackup-name
+                            (concat ξx "~" (format-time-string "%Y%m%dT%H%M%S") "~")))
+                       (copy-file ξx ξbackup-name t)))
+                   (dired-get-marked-files))
+             (message "marked files backed up"))
+         (user-error "buffer not file nor dired")))))
+
+ (defun xah-make-backup-and-save ()
+   "backup of current file and save, or backup dired marked files.
+  For detail, see `xah-make-backup'.
+  If the current buffer is not associated with a file, nothing's done.
+  URL `http://ergoemacs.org/emacs/elisp_make-backup.html'
+  Version 2015-10-14"
+   (interactive)
+   (if (buffer-file-name)
+       (progn
+         (xah-make-backup)
+         (when (buffer-modified-p)
+           (save-buffer)))
+     (progn
+       (xah-make-backup))))
+ (global-set-key (kbd "C-c b") 'xah-make-backup-and-save)
+)
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
 (custom-set-variables
