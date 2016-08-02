@@ -34,6 +34,7 @@ values."
      org
      gtags
      cscope
+     javascript
      ;;UX ;; My private layer for the look and feel of emacs
      ;; (shell :variables
      ;;        shell-default-height 30
