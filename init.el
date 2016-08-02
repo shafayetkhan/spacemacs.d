@@ -486,6 +486,9 @@ Version 2015-10-14"
                        "~/Org/notes.org"
                        "~/Org/help/emacs-help.org"
                        "~/Org/help/work-help.org"))))
+ ;; replace query-replace with anzu
+ (global-set-key [remap query-replace] #'anzu-query-replace)
+ (global-set-key [remap query-replace-regexp] #'anzu-query-replace-regexp)
 )
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
