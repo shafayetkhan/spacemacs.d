@@ -489,6 +489,12 @@ Version 2015-10-14"
  ;; replace query-replace with anzu
  (global-set-key [remap query-replace] #'anzu-query-replace)
  (global-set-key [remap query-replace-regexp] #'anzu-query-replace-regexp)
+
+ ;; add popwin special modes
+ (add-to-list 'popwin:special-display-config '("*Occur*"))
+ (push '(ag-mode :width 0.5 :position right) popwin:special-display-config)
+ (push '(Man-mode :width 0.5 :position right) popwin:special-display-config)
+
 )
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
