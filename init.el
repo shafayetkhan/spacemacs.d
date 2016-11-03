@@ -36,6 +36,7 @@ values."
      gtags
      cscope
      javascript
+     ;; kal
      ;;UX ;; My private layer for the look and feel of emacs
      ;; (shell :variables
      ;;        shell-default-height 30
@@ -53,9 +54,13 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(log4e
+   dotspacemacs-additional-packages '(;; kal-el ##begin##
+                                      ;;request-deferred
+                                      ;;cl-lib
+                                      ;; kal-el ##end##
+                                      log4e
                                       helm-projectile
-                                      (materialistic-set-theme :location "~/code/emacs-configs/materialistic-seti")
+                                      (materialistic-seti-theme :location "~/code/emacs-configs/materialistic-seti")
                                       ibuffer-vc
                                       fullframe
                                       helm-ag
@@ -290,126 +295,130 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
- ;; (add-to-list 'custom-theme-load-path "~/code/emacs-configs/materialistic-seti")
- ;; (load-theme 'materialistic-seti)
- (add-hook 'prog-mode-hook #'linum-mode)
- (require 'materialistic-seti-theme)
- (cua-selection-mode t)
- (setq linum-format (if (not window-system) "%4d " "%4d"))
- (hlinum-activate)
- (which-function-mode)
- (setq which-func-unknown "n/a")
- ;; (setq powerline-default-separator 'arrow-fade)
- ;; (spaceline-compile)
- ;; Key Bindings
- (global-set-key (kbd "C-z") 'evil-emacs-state)
- (global-set-key (kbd "C-c C-f") 'spacemacs/helm-find-files)
- (add-hook 'c-mode-common-hook
-           (lambda ()
-             ;; Safe local variables
-             (put 'helm-make-build-dir 'safe-local-variable 'stringp)
-             (setq compilation-scroll-output 'first-error)
-             ;;(setq compilation-scroll-output t)
-             (semantic-mode 1)
-             (global-semantic-stickyfunc-mode 1)
-             (define-key c-mode-map (kbd "C-c h") 'ff-find-other-file)
-             (define-key c++-mode-map (kbd "C-c h") 'ff-find-other-file)
-             (define-key evil-normal-state-map (kbd "M-.") 'helm-gtags-dwim)
-             (with-eval-after-load 'projectile
-               (push '("C" "h") projectile-other-file-alist)
-               (push '("cxx" "h") projectile-other-file-alist))))
- ;; Git config
- (setq magit-repository-directories '("~/code/"))
- ;; Better Defaults from Sanityinc (Steve Purcell)
- ;; When splitting window, show (other-buffer) in the new window
- (defun split-window-func-with-other-buffer (split-function)
-   (lexical-let ((s-f split-function))
-     (lambda (&optional arg)
-       "Split this window and switch to the new window unless ARG is provided."
-       (interactive "P")
-       (funcall s-f)
-       (let ((target-window (next-window)))
-         (set-window-buffer target-window (other-buffer))
-         (unless arg
-           (select-window target-window))))))
+  ;; I use expand region a lot. I like having some emacs keybindings available
+  ;; in hybrid mode
+  (define-key evil-hybrid-state-map (kbd "C-\\") 'er/expand-region)
+  ;; end hybrid mode key bindings
+  (add-hook 'prog-mode-hook #'linum-mode)
+  (require 'materialistic-seti-theme)
+  (cua-selection-mode t)
+  (setq linum-format (if (not window-system) "%4d " "%4d"))
+  (hlinum-activate)
+  (which-function-mode)
+  (setq which-func-unknown "n/a")
+  ;; (setq powerline-default-separator 'arrow-fade)
+  ;; (spaceline-compile)
+  ;; Key Bindings
+  (global-set-key (kbd "C-z") 'evil-emacs-state)
+  (global-set-key (kbd "C-c C-f") 'spacemacs/helm-find-files)
+  (add-hook 'c-mode-common-hook
+            (lambda ()
+              ;; Safe local variables
+              (put 'helm-make-build-dir 'safe-local-variable 'stringp)
+              (setq compilation-scroll-output 'first-error)
+              ;;(setq compilation-scroll-output t)
+              (semantic-mode 1)
+              (global-semantic-stickyfunc-mode 1)
+              (define-key c-mode-map (kbd "C-c h") 'ff-find-other-file)
+              (define-key c++-mode-map (kbd "C-c h") 'ff-find-other-file)
+              (define-key evil-normal-state-map (kbd "M-.") 'helm-gtags-dwim)
+              (with-eval-after-load 'projectile
+                (push '("C" "h") projectile-other-file-alist)
+                (push '("cxx" "h") projectile-other-file-alist))))
+  ;; Git config
+  ;; Finally a way to disable evil mode with buffer regexps <3
+  (push '("*magit" . emacs) evil-buffer-regexps)
+  (setq magit-repository-directories '("~/code/"))
+  ;; Better Defaults from Sanityinc (Steve Purcell)
+  ;; When splitting window, show (other-buffer) in the new window
+  (defun split-window-func-with-other-buffer (split-function)
+    (lexical-let ((s-f split-function))
+      (lambda (&optional arg)
+        "Split this window and switch to the new window unless ARG is provided."
+        (interactive "P")
+        (funcall s-f)
+        (let ((target-window (next-window)))
+          (set-window-buffer target-window (other-buffer))
+          (unless arg
+            (select-window target-window))))))
 
- (global-set-key "\C-x2" (split-window-func-with-other-buffer 'split-window-vertically))
- (global-set-key "\C-x3" (split-window-func-with-other-buffer 'split-window-horizontally))
+  (global-set-key "\C-x2" (split-window-func-with-other-buffer 'split-window-vertically))
+  (global-set-key "\C-x3" (split-window-func-with-other-buffer 'split-window-horizontally))
 
- (defun sanityinc/toggle-delete-other-windows ()
-   "Delete other windows in frame if any, or restore previous window config."
-   (interactive)
-   (if (and winner-mode
-            (equal (selected-window) (next-window)))
-       (winner-undo)
-     (delete-other-windows)))
+  (defun sanityinc/toggle-delete-other-windows ()
+    "Delete other windows in frame if any, or restore previous window config."
+    (interactive)
+    (if (and winner-mode
+             (equal (selected-window) (next-window)))
+        (winner-undo)
+      (delete-other-windows)))
 
- (global-set-key "\C-x1" 'sanityinc/toggle-delete-other-windows)
+  (global-set-key "\C-x1" 'sanityinc/toggle-delete-other-windows)
 
- ;; Rearrange split windows
- (defun split-window-horizontally-instead ()
-   (interactive)
-   (save-excursion
-     (delete-other-windows)
-     (funcall (split-window-func-with-other-buffer 'split-window-horizontally))))
+  ;; Rearrange split windows
+  (defun split-window-horizontally-instead ()
+    (interactive)
+    (save-excursion
+      (delete-other-windows)
+      (funcall (split-window-func-with-other-buffer 'split-window-horizontally))))
 
- (defun split-window-vertically-instead ()
-   (interactive)
-   (save-excursion
-     (delete-other-windows)
-     (funcall (split-window-func-with-other-buffer 'split-window-vertically))))
+  (defun split-window-vertically-instead ()
+    (interactive)
+    (save-excursion
+      (delete-other-windows)
+      (funcall (split-window-func-with-other-buffer 'split-window-vertically))))
 
- (global-set-key "\C-c|" 'split-window-horizontally-instead)
- (global-set-key "\C-c_" 'split-window-vertically-instead)
- ;; Set keybinding to dedicate current window
- (global-set-key (kbd "C-c <down>") 'spacemacs/toggle-current-window-dedication)
+  (global-set-key "\C-c|" 'split-window-horizontally-instead)
+  (global-set-key "\C-c_" 'split-window-vertically-instead)
+  ;; Set keybinding to dedicate current window
+  (global-set-key (kbd "C-c <down>") 'spacemacs/toggle-current-window-dedication)
 
- ;; ibuffer config from Sanityinc - this should really be in it's own layer
- (defun ibuffer-set-up-preferred-filters ()
-   (ibuffer-vc-set-filter-groups-by-vc-root)
-   (unless (eq ibuffer-sorting-mode 'filename/process)
-     (ibuffer-do-sort-by-filename/process)))
- (add-hook 'ibuffer-hook 'ibuffer-set-up-preferred-filters)
- (setq-default ibuffer-show-empty-filter-groups nil)
- (with-eval-after-load 'ibuffer
-             ;; Use human readable Size column instead of original one
-             (define-ibuffer-column size-h
-               (:name "Size" :inline t)
-               (cond
-                ((> (buffer-size) 1000000) (format "%7.1fM" (/ (buffer-size) 1000000.0)))
-                ((> (buffer-size) 1000) (format "%7.1fk" (/ (buffer-size) 1000.0)))
-                (t (format "%8d" (buffer-size))))))
- ;; Explicitly require ibuffer-vc to get its column definitions, which
- ;; can't be autoloaded
- (with-eval-after-load 'ibuffer
-             (fullframe ibuffer ibuffer-quit))
- (with-eval-after-load 'ibuffer
-             (require 'ibuffer-vc))
- ;; Modify the default ibuffer-formats (toggle with `)
- (setq ibuffer-formats
-       '((mark modified read-only vc-status-mini " "
-               (name 18 18 :left :elide)
-               " "
-               (size-h 9 -1 :right)
-               " "
-               (mode 16 16 :left :elide)
-               " "
-               filename-and-process)
-         (mark modified read-only vc-status-mini " "
-               (name 18 18 :left :elide)
-               " "
-               (size-h 9 -1 :right)
-               " "
-               (mode 16 16 :left :elide)
-               " "
-               (vc-status 16 16 :left)
-               " "
-               filename-and-process)))
- (setq ibuffer-filter-group-name-face 'font-lock-doc-face)
- (global-set-key (kbd "C-x C-b") 'ibuffer)
- ;; Xah Lee Make Backup of Current File
- (defun xah-make-backup ()
-   "Make a backup copy of current file or dired marked files.
+  ;; ibuffer config from Sanityinc - this should really be in it's own layer
+  (defun ibuffer-set-up-preferred-filters ()
+    (ibuffer-vc-set-filter-groups-by-vc-root)
+    (unless (eq ibuffer-sorting-mode 'filename/process)
+      (ibuffer-do-sort-by-filename/process)))
+  (add-hook 'ibuffer-hook 'ibuffer-set-up-preferred-filters)
+  (setq-default ibuffer-show-empty-filter-groups nil)
+  (with-eval-after-load 'ibuffer
+    ;; Use human readable Size column instead of original one
+    (define-ibuffer-column size-h
+      (:name "Size" :inline t)
+      (cond
+       ((> (buffer-size) 1000000) (format "%7.1fM" (/ (buffer-size) 1000000.0)))
+       ((> (buffer-size) 1000) (format "%7.1fk" (/ (buffer-size) 1000.0)))
+       (t (format "%8d" (buffer-size))))))
+  ;; Explicitly require ibuffer-vc to get its column definitions, which
+  ;; can't be autoloaded
+  (with-eval-after-load 'ibuffer
+    (fullframe ibuffer ibuffer-quit))
+  (with-eval-after-load 'ibuffer
+    (require 'ibuffer-vc))
+  ;; Modify the default ibuffer-formats (toggle with `)
+  (setq ibuffer-formats
+        '((mark modified read-only vc-status-mini " "
+                (name 18 18 :left :elide)
+                " "
+                (size-h 9 -1 :right)
+                " "
+                (mode 16 16 :left :elide)
+                " "
+                filename-and-process)
+          (mark modified read-only vc-status-mini " "
+                (name 18 18 :left :elide)
+                " "
+                (size-h 9 -1 :right)
+                " "
+                (mode 16 16 :left :elide)
+                " "
+                (vc-status 16 16 :left)
+                " "
+                filename-and-process)))
+  (setq ibuffer-filter-group-name-face 'font-lock-doc-face)
+  (global-set-key (kbd "C-x C-b") 'ibuffer)
+  ;; Xah Lee Make Backup of Current File
+  (defun xah-make-backup ()
+    "Make a backup copy of current file or dired marked files.
 If in dired, backup current file or marked files.
 The backup file name is
  ‹name›~‹timestamp›~
@@ -419,84 +428,84 @@ in the same dir. If such a file already exist, it's overwritten.
 If the current buffer is not associated with a file, nothing's done.
 URL `http://ergoemacs.org/emacs/elisp_make-backup.html'
 Version 2015-10-14"
-   (interactive)
-   (let ((ξfname (buffer-file-name)))
-     (if ξfname
-         (let ((ξbackup-name
-                (concat ξfname "~" (format-time-string "%Y%m%dT%H%M%S") "~")))
-           (copy-file ξfname ξbackup-name t)
-           (message (concat "Backup saved at: " ξbackup-name)))
-       (if (string-equal major-mode "dired-mode")
-           (progn
-             (mapc (lambda (ξx)
-                     (let ((ξbackup-name
-                            (concat ξx "~" (format-time-string "%Y%m%dT%H%M%S") "~")))
-                       (copy-file ξx ξbackup-name t)))
-                   (dired-get-marked-files))
-             (message "marked files backed up"))
-         (user-error "buffer not file nor dired")))))
+    (interactive)
+    (let ((ξfname (buffer-file-name)))
+      (if ξfname
+          (let ((ξbackup-name
+                 (concat ξfname "~" (format-time-string "%Y%m%dT%H%M%S") "~")))
+            (copy-file ξfname ξbackup-name t)
+            (message (concat "Backup saved at: " ξbackup-name)))
+        (if (string-equal major-mode "dired-mode")
+            (progn
+              (mapc (lambda (ξx)
+                      (let ((ξbackup-name
+                             (concat ξx "~" (format-time-string "%Y%m%dT%H%M%S") "~")))
+                        (copy-file ξx ξbackup-name t)))
+                    (dired-get-marked-files))
+              (message "marked files backed up"))
+          (user-error "buffer not file nor dired")))))
 
- (defun xah-make-backup-and-save ()
-   "backup of current file and save, or backup dired marked files.
+  (defun xah-make-backup-and-save ()
+    "backup of current file and save, or backup dired marked files.
   For detail, see `xah-make-backup'.
   If the current buffer is not associated with a file, nothing's done.
   URL `http://ergoemacs.org/emacs/elisp_make-backup.html'
   Version 2015-10-14"
-   (interactive)
-   (if (buffer-file-name)
-       (progn
-         (xah-make-backup)
-         (when (buffer-modified-p)
-           (save-buffer)))
-     (progn
-       (xah-make-backup))))
- (global-set-key (kbd "C-c b") 'xah-make-backup-and-save)
+    (interactive)
+    (if (buffer-file-name)
+        (progn
+          (xah-make-backup)
+          (when (buffer-modified-p)
+            (save-buffer)))
+      (progn
+        (xah-make-backup))))
+  (global-set-key (kbd "C-c b") 'xah-make-backup-and-save)
 
- ;; org-capture settings
- ;; Configure org-capture for todos and notes
- (setq org-default-notes-file "~/Org/notes.org")
- (global-set-key (kbd "C-c c") 'org-capture)
- (setq org-capture-templates
-       `(("t" "todo")
-         ("tw" "work" entry (file+headline "~/Org/gtd.org" "Inbox")
-          "* JIRA %?\n   SCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+1d\"))\n%U\n" :clock-resume t :prepend t)
-         ("tt" "task" entry (file+headline "~/Org/gtd.org" "Inbox")
-          "* NEXT %?\n   SCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+1d\"))\n%U\n" :clock-resume t :prepend t)
-         ("n" "note" entry (file+headline "" "Bank") ; "" => org-default-notes-file
-          "* %? :@note:\n%U\n%a\n" :clock-resume t :prepend t)
-         ("m" "meeting" entry (file+headline "~/Org/gtd.org" "Meetings")
-          "* MEETING with %? :@meeting:\n%U" :clock-in t :clock-resume t :prepend t)
-         ))
- ;; Make code in org source block pretty
- (setq org-src-fontify-natively t)
- ;; Set todo keywords sequence
- (setq org-todo-keywords
-       (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!/!)")
-               (sequence "JIRA(j)" "NEXT(n)" "DOING(i)" "DELEGATED(h@/!)" "|" "DONE(d!/!)" "CANCELLED(c@/!)")
-               (sequence "PROJECT(p)" "|" "DONE(d!/!)" "CANCELLED(c@/!)")
-               (sequence "WAITING(w@/!)" "HOLD(h)" "|" "CANCELLED(c@/!)" "MEETING"))))
- ;; Highlight todo keywords
- (setq org-todo-keyword-faces
-       (quote (("NEXT" :inherit warning)
-               ("PROJECT" :inherit font-lock-string-face))))
+  ;; org-capture settings
+  ;; Configure org-capture for todos and notes
+  (setq org-default-notes-file "~/Org/notes.org")
+  (global-set-key (kbd "C-c c") 'org-capture)
+  (setq org-capture-templates
+        `(("t" "todo")
+          ("tw" "work" entry (file+headline "~/Org/gtd.org" "Inbox")
+           "* JIRA %?\n   SCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+1d\"))\n%U\n" :clock-resume t :prepend t)
+          ("tt" "task" entry (file+headline "~/Org/gtd.org" "Inbox")
+           "* NEXT %?\n   SCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+1d\"))\n%U\n" :clock-resume t :prepend t)
+          ("n" "note" entry (file+headline "" "Bank") ; "" => org-default-notes-file
+           "* %? :@note:\n%U\n%a\n" :clock-resume t :prepend t)
+          ("m" "meeting" entry (file+headline "~/Org/gtd.org" "Meetings")
+           "* MEETING with %? :@meeting:\n%U" :clock-in t :clock-resume t :prepend t)
+          ))
+  ;; Make code in org source block pretty
+  (setq org-src-fontify-natively t)
+  ;; Set todo keywords sequence
+  (setq org-todo-keywords
+        (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!/!)")
+                (sequence "JIRA(j)" "NEXT(n)" "DOING(i)" "DELEGATED(h@/!)" "|" "DONE(d!/!)" "CANCELLED(c@/!)")
+                (sequence "PROJECT(p)" "|" "DONE(d!/!)" "CANCELLED(c@/!)")
+                (sequence "WAITING(w@/!)" "HOLD(h)" "|" "CANCELLED(c@/!)" "MEETING"))))
+  ;; Highlight todo keywords
+  (setq org-todo-keyword-faces
+        (quote (("NEXT" :inherit warning)
+                ("PROJECT" :inherit font-lock-string-face))))
 
- ;; My agenda files
- (setq org-agenda-files
-       (delq nil
-             (mapcar (lambda (x) (and (file-exists-p x) x))
-                     '("~/todoist-home.org"
-                       "~/Org/notes.org"
-                       "~/Org/help/emacs-help.org"
-                       "~/Org/help/work-help.org"))))
- ;; replace query-replace with anzu
- (global-set-key [remap query-replace] #'anzu-query-replace)
- (global-set-key [remap query-replace-regexp] #'anzu-query-replace-regexp)
+  ;; My agenda files
+  (setq org-agenda-files
+        (delq nil
+              (mapcar (lambda (x) (and (file-exists-p x) x))
+                      '("~/todoist-home.org"
+                        "~/Org/notes.org"
+                        "~/Org/help/emacs-help.org"
+                        "~/Org/help/work-help.org"))))
+  ;; replace query-replace with anzu
+  (global-set-key [remap query-replace] #'anzu-query-replace)
+  (global-set-key [remap query-replace-regexp] #'anzu-query-replace-regexp)
 
- ;; add popwin special modes
- (add-to-list 'popwin:special-display-config '("*Occur*"))
- (push '(ag-mode :width 0.5 :position right) popwin:special-display-config)
- (push '(Man-mode :width 0.5 :position right) popwin:special-display-config)
-)
+  ;; add popwin special modes
+  (add-to-list 'popwin:special-display-config '("*Occur*"))
+  (push '(ag-mode :width 0.5 :position right) popwin:special-display-config)
+  (push '(Man-mode :width 0.5 :position right) popwin:special-display-config)
+  )
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
 (custom-set-variables

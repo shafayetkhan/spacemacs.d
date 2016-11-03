@@ -31,7 +31,7 @@
 
 (defconst UX-packages
   '(
-    Package recipe (How cool is this?!)
+    ;;Package recipe (How cool is this?!)
     (materialistic-seti-theme :location (recipe
                                    :fetcher github
                                    :repo "shafayetkhan/materialistic-seti"))
