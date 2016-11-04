@@ -505,6 +505,8 @@ Version 2015-10-14"
   (add-to-list 'popwin:special-display-config '("*Occur*"))
   (push '(ag-mode :width 0.5 :position right) popwin:special-display-config)
   (push '(Man-mode :width 0.5 :position right) popwin:special-display-config)
+  ;; Have projectile open dired after selection
+  (setq projectile-switch-project-action 'projectile-dired)
   )
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
