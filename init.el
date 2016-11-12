@@ -60,7 +60,7 @@ values."
                                       ;; kal-el ##end##
                                       log4e
                                       helm-projectile
-                                      (materialistic-seti-theme :location "~/code/emacs-configs/materialistic-seti")
+                                      ;; (materialistic-seti-theme :location "~/code/emacs-configs/materialistic-seti")
                                       ibuffer-vc
                                       fullframe
                                       helm-ag
@@ -295,12 +295,14 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+  ;; Stupid persp-mode bug
+  (setq-default persp-auto-save-opt 0)
   ;; I use expand region a lot. I like having some emacs keybindings available
   ;; in hybrid mode
   (define-key evil-hybrid-state-map (kbd "C-\\") 'er/expand-region)
   ;; end hybrid mode key bindings
   (add-hook 'prog-mode-hook #'linum-mode)
-  (require 'materialistic-seti-theme)
+  ;; (require 'materialistic-seti-theme)
   (cua-selection-mode t)
   (setq linum-format (if (not window-system) "%4d " "%4d"))
   (hlinum-activate)
