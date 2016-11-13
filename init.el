@@ -509,6 +509,17 @@ Version 2015-10-14"
   (push '(Man-mode :width 0.5 :position right) popwin:special-display-config)
   ;; Have projectile open dired after selection
   (setq projectile-switch-project-action 'projectile-dired)
+
+  ;; Make evil-mode up/down operate in screen lines instead of logical lines
+  (define-key evil-motion-state-map "j" 'evil-next-visual-line)
+  (define-key evil-motion-state-map (kbd "<down>") 'evil-next-visual-line)
+  (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
+  (define-key evil-motion-state-map (kbd "<up>") 'evil-previous-visual-line)
+  ;; Also in visual mode
+  (define-key evil-visual-state-map "j" 'evil-next-visual-line)
+  (define-key evil-visual-state-map (kbd "<down>") 'evil-next-visual-line)
+  (define-key evil-visual-state-map "k" 'evil-previous-visual-line)
+  (define-key evil-visual-state-map (kbd "<up>") 'evil-previous-visual-line)
   )
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
