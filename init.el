@@ -328,9 +328,13 @@ you should place your code here."
                 (push '("C" "h") projectile-other-file-alist)
                 (push '("cxx" "h") projectile-other-file-alist))))
   ;; Git config
+  (global-git-commit-mode t)
   ;; Finally a way to disable evil mode with buffer regexps <3
   (push '("*magit" . emacs) evil-buffer-regexps)
   (setq magit-repository-directories '("~/code/"))
+  ;; This is how you set leader key bindings
+  (spacemacs/set-leader-keys
+    "gE" 'magit-ediff-show-working-tree)
   ;; Better Defaults from Sanityinc (Steve Purcell)
   ;; When splitting window, show (other-buffer) in the new window
   (defun split-window-func-with-other-buffer (split-function)
