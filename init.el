@@ -69,10 +69,10 @@ values."
      vimscript
      yaml
 
-
      ;; Non-contrib layers
 
      ;; Personal contrib layers
+     ;; TODO Look at theBB's personal stuff
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
