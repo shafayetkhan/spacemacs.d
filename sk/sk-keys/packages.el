@@ -18,6 +18,7 @@
 
 (defun sk-keys/post-init-magit ()
   (with-eval-after-load 'magit
+    ;; (setq magit-display-buffer-function 'magit-display-buffer-traditional)
     (evil-define-key 'normal magit-mode-map (kbd "ESC") nil)
     (evil-define-key 'normal magit-mode-map (kbd "M-j") 'magit-section-forward-sibling)
     (evil-define-key 'normal magit-mode-map (kbd "M-k") 'magit-section-backward-sibling)))
