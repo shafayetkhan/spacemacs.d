@@ -2,7 +2,7 @@
  theming-modifications
  '((monokai
     ;; Font locking
-    (font-lock-comment-face :slant italic)
+    (font-lock-comment-face :foreground "#41535B" :slant italic)
     (font-lock-string-face :slant italic)
     (font-lock-doc-face :slant italic)
     (font-lock-keyword-face :weight bold :foreground "#ff4185")
@@ -40,8 +40,16 @@
     (company-tooltip-annotation-selection :background "#66d9ef")
     (erc-timestamp-face
      :inherit font-lock-comment-face :foreground nil)
+    ;; (evil-search-highlight-persist-highlight-face
+    ;;  :background "#9FCA56" :foreground "#000000")
+
+    ;; (evil-search-highlight-persist-highlight-face
+    ;;  :background "#EEB422" :foreground "#000000")
+
     (evil-search-highlight-persist-highlight-face
-     :background "#fc5fef" :foreground "#000000")
+     :background "#CDC673" :foreground "#000000")
+    (evil-ex-lazy-highlight
+     :background "#CDC673" :foreground "#000000")
     (font-latex-verbatim-face :inherit nil)
     (helm-ff-prefix :background nil :foreground "#666666" :weight bold)
     (org-done :foreground "MediumSpringGreen")
