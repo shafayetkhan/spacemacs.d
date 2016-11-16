@@ -26,5 +26,10 @@
    (split-window-below)
    (select-window-1)
    (split-window-below)
-   (balance-windows))
-  )
+   (balance-windows)))
+
+(defun sk/search-clear-highlight ()
+  "Clear all search highlights"
+  (interactive)
+  (evil-search-highlight-persist-remove-all)
+  (evil-ex-nohighlight))
