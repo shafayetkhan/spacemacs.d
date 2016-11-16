@@ -13,7 +13,7 @@
 
 (defun bb/save-delete-quit ()
   (interactive)
-  (spacemacs/write-file)
+  (save-buffer)
   (kill-this-buffer)
   (bb/maybe-quit))
 
