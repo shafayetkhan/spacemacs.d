@@ -47,9 +47,9 @@
     ;;  :background "#EEB422" :foreground "#000000")
 
     (evil-search-highlight-persist-highlight-face
-     :background "#CDC673" :foreground "#000000")
+     :background "#EEB422" :foreground "#000000")
     (evil-ex-lazy-highlight
-     :background "#CDC673" :foreground "#000000")
+     :background "#EEB422" :foreground "#000000")
     (font-latex-verbatim-face :inherit nil)
     (helm-ff-prefix :background nil :foreground "#666666" :weight bold)
     (org-done :foreground "MediumSpringGreen")
