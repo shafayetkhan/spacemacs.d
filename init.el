@@ -306,6 +306,7 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
+  (setq-default evil-search-module 'evil-search)
   (setq-default git-magit-status-fullscreen t)
   ;; This should go in the config.el of the UX layer
   (defvar spacemacs-evil-cursors '(("normal" "DarkGoldenrod2" box)
@@ -400,6 +401,7 @@ you should place your code here."
   ;; I use expand region a lot. I like having some emacs keybindings available
   ;; in hybrid mode
   (define-key evil-hybrid-state-map (kbd "C-\\") 'er/expand-region)
+  ;; TODO do somethign like above for string-insert-rectangle function
   ;; end hybrid mode key bindings
   (add-hook 'prog-mode-hook #'linum-mode)
   ;; (require 'materialistic-seti-theme)
