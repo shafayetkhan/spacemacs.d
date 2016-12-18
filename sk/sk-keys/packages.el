@@ -2,6 +2,7 @@
       '(company
         helm
         magit
+        dired
         ))
 
 
@@ -22,3 +23,7 @@
     (evil-define-key 'normal magit-mode-map (kbd "ESC") nil)
     (evil-define-key 'normal magit-mode-map (kbd "M-j") 'magit-section-forward-sibling)
     (evil-define-key 'normal magit-mode-map (kbd "M-k") 'magit-section-backward-sibling)))
+
+(defun sk-keys/post-init-dired ()
+  (with-eval-after-load 'dired
+    (global-set-key (kbd "C-x C-d") 'dired)))
