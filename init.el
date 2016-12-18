@@ -53,6 +53,7 @@ values."
      gtags
      cscope
      (ibuffer :variables ibuffer-group-buffers-by nil)
+     ivy
      javascript
      ;; kal
      ;;UX ;; My private layer for the look and feel of emacs
