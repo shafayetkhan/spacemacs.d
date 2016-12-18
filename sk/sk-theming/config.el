@@ -19,6 +19,8 @@
     (web-mode-comment-face
      :inherit font-lock-comment-face :foreground nil)
 
+    ;; TODO change helm source header color
+
     ;; Modeline
     (header-line :box (:color "#555555" :line-width 1))
     (mode-line :box (:color "#999999" :line-width 1 :style released-button))
@@ -28,7 +30,7 @@
     (mode-line-inactive :box (:color "#666666" :line-width 1 :style released-button))
     (powerline-inactive1 :box (:color "#666666" :line-width 1 :style released-button))
     (powerline-inactive2 :box (:color "#666666" :line-width 1 :style released-button))
-    (helm-prefarg :foreground "PaleGreen")
+    ;; (helm-prefarg :foreground "PaleGreen")
 
     ;; Flycheck
     (flycheck-fringe-error :background nil)
@@ -51,7 +53,7 @@
     (evil-ex-lazy-highlight
      :background "#EEB422" :foreground "#000000")
     (font-latex-verbatim-face :inherit nil)
-    (helm-ff-prefix :background nil :foreground "#666666" :weight bold)
+    ;; (helm-ff-prefix :background nil :foreground "#666666" :weight bold)
     (org-done :foreground "MediumSpringGreen")
     (region :background "#998f84")
     (spacemacs-transient-state-title-face :background nil :foreground nil :inherit font-lock-warning-face)
