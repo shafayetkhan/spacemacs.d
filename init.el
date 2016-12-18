@@ -19,7 +19,7 @@ values."
    dotspacemacs-enable-lazy-installation nil
    dotspacemacs-ask-for-lazy-installation nil
    dotspacemacs-configuration-layer-path nil
-   dotspacemacs-install-packages 'used-but-keep-unused
+   dotspacemacs-install-packages 'used-only
    ;; List of configuration layers to load. If it is the symbol `all' instead
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
@@ -84,15 +84,15 @@ values."
    dotspacemacs-additional-packages '(
                                       defproject
                                       evil-embrace
-                                      helm-projectile
+                                      ;;helm-projectile
                                       ;; (materialistic-seti-theme :location "~/code/emacs-configs/materialistic-seti")
                                       ibuffer-vc
                                       fullframe
-                                      helm-ag
-                                      helm-flycheck
+                                      ;;helm-ag
+                                      ;;helm-flycheck
                                       hlinum
-                                      nginx-mode
-                                      powerline
+                                      ;;nginx-mode
+                                      ;;powerline
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(ido
@@ -220,10 +220,12 @@ values."
    ;; `find-contrib-file' (SPC f e c) are replaced. (default nil)
    dotspacemacs-use-ido nil
    ;; If non nil, `helm' will try to minimize the space it uses. (default nil)
-   dotspacemacs-helm-resize t
+   ;; XXX Do not use this - crashes emacs in console mysteriously
+   dotspacemacs-helm-resize nil
    ;; if non nil, the helm header is hidden when there is only one source.
    ;; (default nil)
-   dotspacemacs-helm-no-header t
+   ;; XXX Do not use this - crashes emacs in console mysteriously
+   dotspacemacs-helm-no-header nil
    ;; define the position to display `helm', options are `bottom', `top',
    ;; `left', or `right'. (default 'bottom)
    dotspacemacs-helm-position 'bottom
@@ -370,16 +372,19 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
    ;; Shell
    shell-default-term-shell "/bin/zsh"
+   exec-path-from-shell-arguments '("-l")
 
    ;; Web
    web-mode-markup-indent-offset 2
    web-mode-css-indent-offset 2
    web-mode-code-indent-offset 4
 
+   ;; javascript
+   js-indent-level 2
+   js2-basic-offset 2
    )
 
   )
-
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
@@ -388,7 +393,8 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
-  (setq-default helm-echo-input-in-header-line nil)
+  ;; XXX Do not use this - crashes emacs in console mysteriously
+  (setq-default helm-echo-input-in-header-line t)
   ;; Stupid persp-mode bug
   (setq-default persp-auto-save-opt 0)
   ;; I use expand region a lot. I like having some emacs keybindings available
@@ -633,8 +639,8 @@ Version 2015-10-14"
     (diminish 'command-log-mode))
 
   ;; Disable smartparens highlighting
-  (with-eval-after-load 'smartparens
-    (show-smartparens-global-mode -1))
+  ;; (with-eval-after-load 'smartparens
+  ;;   (show-smartparens-global-mode -1))
 
   ;; Thanks StreakyCobra
   (evil-set-initial-state 'term-mode 'emacs)
@@ -645,34 +651,6 @@ Version 2015-10-14"
   (add-hook 'inferior-emacs-lisp-mode-hook 'smartparens-mode)
 
   )
-;; Do not write anything past this comment. This is where Emacs will
-;; auto-generate custom variable definitions.
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-    ("8baebc9660b01e1d71565869b492b3dc98299138e692aefe5427019a7c171f10" "ff349024280f2b64ebc0213f293261f48d03d1a1a335c43e86a11925765b01da" default)))
- '(evil-search-module (quote evil-search))
- '(exec-path-from-shell-arguments (quote ("-l")))
- '(safe-local-variable-values (quote ((helm-make-build-dir . "./")))))
-;; (custom-set-faces
-;;  ;; custom-set-faces was added by Custom.
-;;  ;; If you edit it by hand, you could mess it up, so be careful.
-;;  ;; Your init file should contain only one such instance.
-;;  ;; If there is more than one, they won't work right.
-;;  '(spacemacs-emacs-face ((t (:background "Red" :foreground "#49483E" :box (:line-width 1 :color "#3E3D31" :style unspecified) :inherit (quote mode-line)))))
-;;  '(spacemacs-hybrid-face ((t (:background "chartreuse3" :foreground "#49483E" :box (:line-width 1 :color "#3E3D31" :style unspecified) :inherit (quote mode-line))))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:background nil))))
- '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
- '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))
 
 (when (file-exists-p "~/local.el")
   (load "~/local.el"))
