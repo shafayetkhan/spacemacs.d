@@ -398,11 +398,6 @@ you should place your code here."
   (setq-default helm-echo-input-in-header-line t)
   ;; Stupid persp-mode bug
   (setq-default persp-auto-save-opt 0)
-  ;; I use expand region a lot. I like having some emacs keybindings available
-  ;; in hybrid mode
-  (define-key evil-hybrid-state-map (kbd "C-\\") 'er/expand-region)
-  ;; TODO do somethign like above for string-insert-rectangle function
-  ;; end hybrid mode key bindings
   (add-hook 'prog-mode-hook #'linum-mode)
   ;; (require 'materialistic-seti-theme)
   (cua-selection-mode t)
@@ -412,9 +407,6 @@ you should place your code here."
   (setq which-func-unknown "n/a")
   ;; (setq powerline-default-separator 'arrow-fade)
   ;; (spaceline-compile)
-  ;; Key Bindings
-  (global-set-key (kbd "C-z") 'evil-emacs-state)
-  (global-set-key (kbd "C-c C-f") 'spacemacs/helm-find-files)
   (add-hook 'c-mode-common-hook
             (lambda ()
               ;; Safe local variables
@@ -434,9 +426,6 @@ you should place your code here."
   ;; Finally a way to disable evil mode with buffer regexps <3
   (push '("*magit" . emacs) evil-buffer-regexps)
   (setq magit-repository-directories '("~/code/"))
-  ;; This is how you set leader key bindings
-  (spacemacs/set-leader-keys
-    "gE" 'magit-ediff-show-working-tree)
 
   ;; Filenames
   (dolist (e '(("xml" . web-mode)
@@ -449,50 +438,6 @@ you should place your code here."
     (push e auto-mode-alist))
   (with-eval-after-load 'projectile
     (push '("C" "h") projectile-other-file-alist))
-
-  ;; Better Defaults from Sanityinc (Steve Purcell)
-  ;; When splitting window, show (other-buffer) in the new window
-  (defun split-window-func-with-other-buffer (split-function)
-    (lexical-let ((s-f split-function))
-      (lambda (&optional arg)
-        "Split this window and switch to the new window unless ARG is provided."
-        (interactive "P")
-        (funcall s-f)
-        (let ((target-window (next-window)))
-          (set-window-buffer target-window (other-buffer))
-          (unless arg
-            (select-window target-window))))))
-
-  (global-set-key "\C-x2" (split-window-func-with-other-buffer 'split-window-vertically))
-  (global-set-key "\C-x3" (split-window-func-with-other-buffer 'split-window-horizontally))
-
-  (defun sanityinc/toggle-delete-other-windows ()
-    "Delete other windows in frame if any, or restore previous window config."
-    (interactive)
-    (if (and winner-mode
-             (equal (selected-window) (next-window)))
-        (winner-undo)
-      (delete-other-windows)))
-
-  (global-set-key "\C-x1" 'sanityinc/toggle-delete-other-windows)
-
-  ;; Rearrange split windows
-  (defun split-window-horizontally-instead ()
-    (interactive)
-    (save-excursion
-      (delete-other-windows)
-      (funcall (split-window-func-with-other-buffer 'split-window-horizontally))))
-
-  (defun split-window-vertically-instead ()
-    (interactive)
-    (save-excursion
-      (delete-other-windows)
-      (funcall (split-window-func-with-other-buffer 'split-window-vertically))))
-
-  (global-set-key "\C-c|" 'split-window-horizontally-instead)
-  (global-set-key "\C-c_" 'split-window-vertically-instead)
-  ;; Set keybinding to dedicate current window
-  (global-set-key (kbd "C-c <down>") 'spacemacs/toggle-current-window-dedication)
 
   ;; ibuffer config from Sanityinc - this should really be in it's own layer
   (defun ibuffer-set-up-preferred-filters ()
@@ -537,54 +482,6 @@ you should place your code here."
                 filename-and-process)))
   (setq ibuffer-filter-group-name-face 'font-lock-doc-face)
   (global-set-key (kbd "C-x C-b") 'ibuffer)
-  ;; Xah Lee Make Backup of Current File
-  (defun xah-make-backup ()
-    "Make a backup copy of current file or dired marked files.
-If in dired, backup current file or marked files.
-The backup file name is
- ‹name›~‹timestamp›~
-example:
- file.html~20150721T014457~
-in the same dir. If such a file already exist, it's overwritten.
-If the current buffer is not associated with a file, nothing's done.
-URL `http://ergoemacs.org/emacs/elisp_make-backup.html'
-Version 2015-10-14"
-    (interactive)
-    (let ((ξfname (buffer-file-name)))
-      (if ξfname
-          (let ((ξbackup-name
-                 (concat ξfname "~" (format-time-string "%Y%m%dT%H%M%S") "~")))
-            (copy-file ξfname ξbackup-name t)
-            (message (concat "Backup saved at: " ξbackup-name)))
-        (if (string-equal major-mode "dired-mode")
-            (progn
-              (mapc (lambda (ξx)
-                      (let ((ξbackup-name
-                             (concat ξx "~" (format-time-string "%Y%m%dT%H%M%S") "~")))
-                        (copy-file ξx ξbackup-name t)))
-                    (dired-get-marked-files))
-              (message "marked files backed up"))
-          (user-error "buffer not file nor dired")))))
-
-  (defun xah-make-backup-and-save ()
-    "backup of current file and save, or backup dired marked files.
-  For detail, see `xah-make-backup'.
-  If the current buffer is not associated with a file, nothing's done.
-  URL `http://ergoemacs.org/emacs/elisp_make-backup.html'
-  Version 2015-10-14"
-    (interactive)
-    (if (buffer-file-name)
-        (progn
-          (xah-make-backup)
-          (when (buffer-modified-p)
-            (save-buffer)))
-      (progn
-        (xah-make-backup))))
-  (global-set-key (kbd "C-c b") 'xah-make-backup-and-save)
-
-  ;; replace query-replace with anzu
-  (global-set-key [remap query-replace] #'anzu-query-replace)
-  (global-set-key [remap query-replace-regexp] #'anzu-query-replace-regexp)
 
   ;; add popwin special modes
   (add-to-list 'popwin:special-display-config '("*Occur*"))
@@ -592,17 +489,6 @@ Version 2015-10-14"
   (push '(Man-mode :width 0.5 :position right) popwin:special-display-config)
   ;; Have projectile open dired after selection
   (setq projectile-switch-project-action 'projectile-dired)
-
-  ;; Make evil-mode up/down operate in screen lines instead of logical lines
-  (define-key evil-motion-state-map "j" 'evil-next-visual-line)
-  (define-key evil-motion-state-map (kbd "<down>") 'evil-next-visual-line)
-  (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
-  (define-key evil-motion-state-map (kbd "<up>") 'evil-previous-visual-line)
-  ;; Also in visual mode
-  (define-key evil-visual-state-map "j" 'evil-next-visual-line)
-  (define-key evil-visual-state-map (kbd "<down>") 'evil-next-visual-line)
-  (define-key evil-visual-state-map "k" 'evil-previous-visual-line)
-  (define-key evil-visual-state-map (kbd "<up>") 'evil-previous-visual-line)
 
   ;; from the BB
     ;; Miscellaneous
@@ -651,7 +537,6 @@ Version 2015-10-14"
   (evil-define-key 'emacs term-raw-map (kbd "C-c") 'term-send-raw)
 
   (add-hook 'inferior-emacs-lisp-mode-hook 'smartparens-mode)
-
   )
 
 (when (file-exists-p "~/local.el")
