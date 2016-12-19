@@ -98,6 +98,7 @@ values."
    dotspacemacs-excluded-packages '(ido
                                     tern
                                     vi-tilde-fringe
+                                    helm
                                     )
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
    ;; are declared in a layer which is not a member of
