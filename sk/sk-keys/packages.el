@@ -1,16 +1,17 @@
 (setq sk-keys-packages
       '(company
+        company-try-hard
         magit
         dired
         ))
 
 
 (defun sk-keys/post-init-company ()
-  (bb/define-key evil-insert-state-map (kbd "C-l") 'company-complete)
   (with-eval-after-load 'company
     (bb/define-key company-active-map
                    (kbd "C-w") 'evil-delete-backward-word
                    (kbd "C-s") 'company-filter-candidates)))
+
 
 
 (defun sk-keys/post-init-magit ()
@@ -23,3 +24,11 @@
 (defun sk-keys/post-init-dired ()
   (with-eval-after-load 'dired
     (global-set-key (kbd "C-x C-d") 'dired)))
+
+
+(defun sk-keys/init-company-try-hard ()
+  (use-package company-try-hard
+    :config
+    (define-key evil-hybrid-state-map (kbd "<backtab>") 'company-try-hard)
+    )
+  )
