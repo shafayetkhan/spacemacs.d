@@ -308,10 +308,10 @@ before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
   (setq-default evil-search-module 'evil-search)
   (setq-default git-magit-status-fullscreen t)
-  ;; This should go in the config.el of the UX layer
+
   (defvar spacemacs-evil-cursors '(("normal" "DarkGoldenrod2" box)
                                    ("insert" "chartreuse3" (bar . 2))
-                                   ("emacs" "red" box)
+                                   ("emacs" "blue" box)
                                    ("hybrid" "chartreuse3" (bar . 2))
                                    ("replace" "chocolate" (hbar . 2))
                                    ("evilified" "LightGoldenrod3" box)
