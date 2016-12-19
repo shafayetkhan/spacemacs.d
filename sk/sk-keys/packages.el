@@ -1,6 +1,5 @@
 (setq sk-keys-packages
       '(company
-        helm
         magit
         dired
         ))
@@ -13,9 +12,6 @@
                    (kbd "C-w") 'evil-delete-backward-word
                    (kbd "C-s") 'company-filter-candidates)))
 
-(defun sk-keys/post-init-helm ()
-  (spacemacs/set-leader-keys
-    "ot" 'helm-top))
 
 (defun sk-keys/post-init-magit ()
   (with-eval-after-load 'magit

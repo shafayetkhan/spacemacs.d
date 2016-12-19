@@ -1,4 +1,6 @@
 (spacemacs/set-leader-keys
+  "ot" 'helm-top
+  "os" 'helm-ag
   "gE" 'magit-ediff-show-working-tree
   "&"  'async-shell-command
   "V"  'cua-exchange-point-and-mark

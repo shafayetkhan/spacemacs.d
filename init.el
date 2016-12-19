@@ -82,13 +82,12 @@ values."
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
-                                      defproject
                                       evil-embrace
                                       ;;helm-projectile
                                       ;; (materialistic-seti-theme :location "~/code/emacs-configs/materialistic-seti")
                                       ibuffer-vc
                                       fullframe
-                                      ;;helm-ag
+                                      helm-ag
                                       ;;helm-flycheck
                                       hlinum
                                       ;;nginx-mode
@@ -98,7 +97,7 @@ values."
    dotspacemacs-excluded-packages '(ido
                                     tern
                                     vi-tilde-fringe
-                                    helm
+                                    ;; helm
                                     )
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
    ;; are declared in a layer which is not a member of
@@ -538,6 +537,8 @@ you should place your code here."
   (evil-define-key 'emacs term-raw-map (kbd "C-c") 'term-send-raw)
 
   (add-hook 'inferior-emacs-lisp-mode-hook 'smartparens-mode)
+
+
   )
 
 (when (file-exists-p "~/local.el")
