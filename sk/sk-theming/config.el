@@ -65,4 +65,5 @@
     (evil-ex-lazy-highlight
      :background "#EEB422" :foreground "#000000")
     (font-lock-comment-face :foreground "#41535B" :slant italic)
+    (sp-show-pair-match-face :background "black" :foreground "blue")
     )))
