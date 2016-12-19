@@ -56,7 +56,6 @@ values."
      ivy
      javascript
      ;; kal
-     ;;UX ;; My private layer for the look and feel of emacs
      search-engine
      (shell :variables shell-default-shell 'eshell)
      shell-scripts
