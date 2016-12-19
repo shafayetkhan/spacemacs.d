@@ -22,8 +22,17 @@
     (evil-define-key 'normal magit-mode-map (kbd "M-k") 'magit-section-backward-sibling)))
 
 (defun sk-keys/post-init-dired ()
-  (with-eval-after-load 'dired
-    (global-set-key (kbd "C-x C-d") 'dired)))
+  (use-package dired
+    ;; :init
+    ;; (bind-key "C-f" 'find-name-dired dired-mode-map)
+    :config
+    (global-set-key (kbd "C-x C-d") 'dired-jump)
+    (bb/define-key dired-mode-map
+      (kbd "C-f") 'find-name-dired
+      (kbd "C-c C-s") 'find-grep-dired
+      (kbd "C-n") 'dired-next-line
+      (kbd "C-p") 'dired-previous-line)
+    ))
 
 
 (defun sk-keys/init-company-try-hard ()
