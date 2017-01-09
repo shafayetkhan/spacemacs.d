@@ -3,6 +3,7 @@
         company-try-hard
         magit
         dired
+        evil
         ))
 
 
@@ -41,3 +42,9 @@
     (define-key evil-hybrid-state-map (kbd "<backtab>") 'company-try-hard)
     )
   )
+
+(defun sk-keys/post-init-evil ()
+  (with-eval-after-load 'evil
+    (bb/define-key evil-normal-state-map
+      (kbd "C-w V") 'split-window-right-and-focus
+      (kbd "C-w S") 'split-window-below-and-focus)))
