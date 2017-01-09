@@ -538,7 +538,8 @@ you should place your code here."
 
   (add-hook 'inferior-emacs-lisp-mode-hook 'smartparens-mode)
 
-
+  ;; Highlight SHAFI
+  (push '("SHAFI" . "#cc9393") hl-todo-keyword-faces)
   )
 
 (when (file-exists-p "~/local.el")
