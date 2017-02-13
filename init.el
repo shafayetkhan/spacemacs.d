@@ -312,7 +312,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   (defvar spacemacs-evil-cursors '(("normal" "DarkGoldenrod2" box)
                                    ("insert" "chartreuse3" (bar . 2))
-                                   ("emacs" "blue" box)
+                                   ("emacs" "DeepSkyBlue" box)
                                    ("hybrid" "chartreuse3" (bar . 2))
                                    ("replace" "chocolate" (hbar . 2))
                                    ("evilified" "LightGoldenrod3" box)
