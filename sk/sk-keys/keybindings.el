@@ -39,7 +39,7 @@
 (global-set-key [remap query-replace-regexp] #'anzu-query-replace-regexp)
 
 (global-set-key (kbd "C-z") 'evil-emacs-state)
-;; (global-set-key (kbd "C-c C-f") 'spacemacs/helm-find-files)
+(global-set-key (kbd "C-c C-f") 'spacemacs/helm-find-files)
 
 ;; I use expand region a lot. I like having some emacs keybindings available
 ;; in hybrid mode
