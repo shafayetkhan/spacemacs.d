@@ -76,7 +76,6 @@ values."
      ;; Non-contrib layers
 
      ;; Personal contrib layers
-     ;; TODO Look at theBB's personal stuff
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -84,7 +83,6 @@ values."
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
                                       evil-embrace
-                                      ;;helm-projectile
                                       ;; (materialistic-seti-theme :location "~/code/emacs-configs/materialistic-seti")
                                       ibuffer-vc
                                       fullframe
@@ -98,7 +96,6 @@ values."
    dotspacemacs-excluded-packages '(ido
                                     tern
                                     vi-tilde-fringe
-                                    ;; helm
                                     )
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
    ;; are declared in a layer which is not a member of
