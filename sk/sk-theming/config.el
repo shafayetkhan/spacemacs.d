@@ -67,7 +67,7 @@
     (evil-ex-lazy-highlight
      :background "#EEB422" :foreground "#000000")
     (font-lock-comment-face :foreground "#41535B" :slant italic)
-    (sp-show-pair-match-face :background "black" :foreground "blue")
+    (sp-show-pair-match-face :background "black" :foreground "brightblue")
 
     ;; better ivy colors
     (compilation-info :foreground "brightblue") ;; this one was hard to track down... color of the buffer name

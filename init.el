@@ -65,6 +65,7 @@ values."
      sk-keys
      sk-org
      sk-theming
+     spacemacs-ui-visual
      (syntax-checking :variables syntax-checking-enable-by-default nil)
      themes-megapack
      typography
@@ -152,6 +153,7 @@ values."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(;;materialistic-seti
+                         darkokai
                          monokai
                          material
                          spacemacs-dark
@@ -165,13 +167,8 @@ values."
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
    dotspacemacs-default-font `("Source Code Pro"
-                               :size ,(if (spacemacs/system-is-mswindows) 16 13)
+                               :size ,(if (spacemacs/system-is-mswindows) 16 15)
                                :weight demibold :width normal :powerline-scale 1.15)
-   ;; dotspacemacs-default-font ("Inconsolata"
-   ;;                             :size 13
-   ;;                             :weight normal
-   ;;                             :width normal
-   ;;                             :powerline-scale 1.3)
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;; The leader key accessible in `emacs state' and `insert state'
@@ -306,6 +303,10 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
+  ;; Transparency in terminal... but theme gets weird
+  ;; (add-hook 'server-visit-hook
+  ;;           (defun on-after-init ()
+  ;;             (set-face-background 'default "unspecified-bg" (selected-frame))))
   (setq-default evil-search-module 'evil-search)
   (setq-default git-magit-status-fullscreen t)
 
