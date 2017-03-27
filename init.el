@@ -394,11 +394,13 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   ;; XXX Do not use this - crashes emacs in console mysteriously
-  (setq-default helm-echo-input-in-header-line nil)
+  (setq-default helm-echo-input-in-header-line t)
   ;; Stupid persp-mode bug
   (setq-default persp-auto-save-opt 0)
+  (add-hook 'prog-mode-hook #'linum-mode)
   ;; (require 'materialistic-seti-theme)
   (cua-selection-mode t)
+  (setq linum-format (if (not window-system) "%4d " "%4d"))
   (hlinum-activate)
   (which-function-mode)
   (setq which-func-unknown "n/a")
