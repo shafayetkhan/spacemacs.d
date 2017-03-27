@@ -48,6 +48,7 @@ values."
      (c-c++ :variables c-c++-enable-clang-support t)
      ;;c-c++
      git
+     go
      markdown
      org
      gtags
