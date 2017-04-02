@@ -165,8 +165,8 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
-   dotspacemacs-default-font `("Source Code Pro"
-                               :size ,(if (spacemacs/system-is-mswindows) 16 15)
+   dotspacemacs-default-font `("Hack"
+                               :size ,(if (spacemacs/system-is-mswindows) 14 13)
                                :weight demibold :width normal :powerline-scale 1.15)
    ;; The leader key
    dotspacemacs-leader-key "SPC"
@@ -216,11 +216,9 @@ values."
    ;; `find-contrib-file' (SPC f e c) are replaced. (default nil)
    dotspacemacs-use-ido nil
    ;; If non nil, `helm' will try to minimize the space it uses. (default nil)
-   ;; XXX Do not use this - crashes emacs in console mysteriously
    dotspacemacs-helm-resize nil
    ;; if non nil, the helm header is hidden when there is only one source.
    ;; (default nil)
-   ;; XXX Do not use this - crashes emacs in console mysteriously
    dotspacemacs-helm-no-header t
    ;; define the position to display `helm', options are `bottom', `top',
    ;; `left', or `right'. (default 'bottom)
@@ -394,7 +392,6 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
-  ;; XXX Do not use this - crashes emacs in console mysteriously
   (setq-default helm-echo-input-in-header-line t)
   ;; Stupid persp-mode bug
   (setq-default persp-auto-save-opt 0)
