@@ -62,13 +62,13 @@
 
     ;; My changes
     ;; Watch out for the names of the faces... some have face at the end and some don't
-    (evil-search-highlight-persist-highlight-face
-     :background "#EEB422" :foreground "#000000")
-    (evil-ex-lazy-highlight
-     :background "#EEB422" :foreground "#000000")
-    (font-lock-comment-face :foreground "#41535B" :slant italic)
-    (sp-show-pair-match-face :background "black" :foreground "DeepSkyBlue")
+    ;; (evil-search-highlight-persist-highlight-face
+    ;;  :background "#EEB422" :foreground "#000000")
+    ;; (evil-ex-lazy-highlight
+    ;;  :background "#EEB422" :foreground "#000000")
+    ;; (font-lock-comment-face :foreground "#41535B" :slant italic)
+    ;; (sp-show-pair-match-face :background "black" :foreground "DeepSkyBlue")
 
     ;; better ivy colors
-    (compilation-info :foreground "DeepSkyBlue") ;; this one was hard to track down... color of the buffer name
+    ;; (compilation-info :foreground "DeepSkyBlue") ;; this one was hard to track down... color of the buffer name
     )))
