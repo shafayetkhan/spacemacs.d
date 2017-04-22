@@ -154,10 +154,10 @@ values."
                          ;; darkmine
                          ;; (zerodark :location (recipe :fetcher github
                          ;;                             :repo "NicolasPetton/zerodark-theme"))
-                         darkokai
+                         ;; darkokai
+                         spacemacs-dark
                          monokai
                          material
-                         spacemacs-dark
                          spacemacs-light
                          solarized-dark
                          solarized-light
@@ -167,8 +167,8 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
-   dotspacemacs-default-font `("Hack"
-                               :size ,(if (spacemacs/system-is-mswindows) 14 13)
+   dotspacemacs-default-font `("Menlo for Powerline"
+                               :size ,(if (spacemacs/system-is-mswindows) 16 16)
                                :weight demibold :width normal :powerline-scale 1.15)
    ;; The leader key
    dotspacemacs-leader-key "SPC"
@@ -384,7 +384,11 @@ before packages are loaded. If you are unsure, you should try in setting them in
    js-indent-level 2
    js2-basic-offset 2
    )
+  (defun on-after-init ()
+    (unless (display-graphic-p (selected-frame))
+      (set-face-background 'default "unspecified-bg" (selected-frame))))
 
+  (add-hook 'window-setup-hook 'on-after-init)
   )
 
 (defun dotspacemacs/user-config ()
@@ -423,7 +427,7 @@ you should place your code here."
   ;; Git config
   (global-git-commit-mode t)
   ;; Finally a way to disable evil mode with buffer regexps <3
-  (push '("*magit" . emacs) evil-buffer-regexps)
+  ;; (push '("*magit" . emacs) evil-buffer-regexps)
   (setq magit-repository-directories '("~/code/"))
 
   ;; Filenames
