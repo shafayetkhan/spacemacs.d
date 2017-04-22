@@ -56,7 +56,6 @@ values."
      (ibuffer :variables ibuffer-group-buffers-by nil)
      ;; ivy
      javascript
-     ;; kal
      search-engine
      (shell :variables shell-default-shell 'eshell)
      shell-scripts
