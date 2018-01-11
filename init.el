@@ -97,6 +97,7 @@ values."
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
+                                      all-the-icons
                                       evil-embrace
                                       ;; (materialistic-seti-theme :location "~/code/emacs-configs/materialistic-seti")
                                       ibuffer-vc
@@ -397,6 +398,9 @@ before packages are loaded. If you are unsure, you should try in setting them in
    ;; javascript
    js-indent-level 2
    js2-basic-offset 2
+
+   ;; C/C++
+   c-basic-offset 2
    )
   (defun on-after-init ()
     (unless (display-graphic-p (selected-frame))
@@ -412,6 +416,7 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+  (setq-default neo-theme (if (display-graphic-p) 'icons 'arrow))
   (setq-default helm-echo-input-in-header-line t)
   ;; Stupid persp-mode bug
   (setq-default persp-auto-save-opt 0)
@@ -557,6 +562,12 @@ you should place your code here."
 
   ;; Highlight SHAFI
   (push '("SHAFI" . "#cc9393") hl-todo-keyword-faces)
+
+  ;; (defun on-after-init ()
+  ;;   (unless (display-graphic-p (selected-frame))
+  ;;     (set-face-background 'default "unspecified-bg" (selected-frame))))
+
+  ;; (add-hook 'window-setup-hook 'on-after-init)
   )
 
 (when (file-exists-p "~/local.el")
