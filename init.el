@@ -54,7 +54,8 @@ values."
      better-defaults
      (colors :variables
              colors-enable-rainbow-identifiers nil
-             colors-enable-nyan-cat-progress-bar (display-graphic-p))
+             ;; colors-enable-nyan-cat-progress-bar (display-graphic-p)
+             )
      dash
      emacs-lisp
      extra-langs
