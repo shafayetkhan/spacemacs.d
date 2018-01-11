@@ -80,7 +80,7 @@ values."
      sk-keys
      sk-org
      sk-theming
-     spacemacs-ui-visual
+     ;; spacemacs-ui-visual
      (syntax-checking :variables syntax-checking-enable-by-default nil)
      themes-megapack
      typography
